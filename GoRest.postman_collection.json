@@ -1,1089 +1,805 @@
 {
-	"info": {
-		"_postman_id": "4d21c053-b743-451e-a652-f3cb989f5948",
-		"name": "GoRest",
-		"description": "Matias Palacios",
-		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "44065305"
-	},
-	"item": [
-		{
-			"name": "Users",
-			"item": [
-				{
-					"name": "GetUsers",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"pm.test(\"Status code is 200\", function(){\r",
-									"    pm.response.to.have.status(200);\r",
-									"});\r",
-									"\r",
-									"pm.test(\"Response time below 2000ms\", function(){\r",
-									"    pm.expect(pm.response.responseTime).to.be.below(2000);\r",
-									"});\r",
-									"\r",
-									"pm.test(\"Response should be JSON\", function () {\r",
-									"    pm.response.to.be.withBody;\r",
-									"    pm.response.to.be.json;\r",
-									"});"
-								],
-								"type": "text/javascript",
-								"packages": {}
-							}
-						}
-					],
-					"request": {
-						"method": "GET",
-						"header": [
-							{
-								"key": "Accept",
-								"value": "application/json"
-							},
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							},
-							{
-								"key": "Authorization",
-								"value": "Bearer e582c281c7b7462e01a3a05be8f93aaa4b40dda654ceb0126ba3f538b43da610"
-							}
-						],
-						"url": {
-							"raw": "{{url}}/users",
-							"host": [
-								"{{url}}"
-							],
-							"path": [
-								"users"
-							]
-						},
-						"description": "Generated from cURL: curl -i -H \"Accept:application/json\" -H \"Content-Type:application/json\" -H \"Authorization: Bearer e582c281c7b7462e01a3a05be8f93aaa4b40dda654ceb0126ba3f538b43da610\" -XGET \"https://gorest.co.in/public/v2/users\""
-					},
-					"response": []
-				},
-				{
-					"name": "CreateUser",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"pm.test(\"Status code is 200\", function(){\r",
-									"    pm.response.to.have.status(201);\r",
-									"});\r",
-									"\r",
-									"pm.test(\"Response time below 200ms\", function(){\r",
-									"    pm.expect(pm.response.responseTime).to.be.below(200);s\r",
-									"});\r",
-									"\r",
-									"pm.test(\"Response should be JSON\", function () {\r",
-									"    pm.response.to.be.withBody;\r",
-									"    pm.response.to.be.json;\r",
-									"});\r",
-									"\r",
-									"pm.test(\"Response has correct structure\", function () {\r",
-									"    pm.expect(responseJson).to.have.property(\"id\");\r",
-									"    pm.expect(responseJson).to.have.property(\"name\");\r",
-									"    pm.expect(responseJson).to.have.property(\"email\");\r",
-									"    pm.expect(responseJson).to.have.property(\"gender\");\r",
-									"    pm.expect(responseJson).to.have.property(\"status\");\r",
-									"});\r",
-									"\r",
-									"pm.environment.set(\"userId\", responseJson.id);"
-								],
-								"type": "text/javascript",
-								"packages": {}
-							}
-						}
-					],
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Accept",
-								"value": "application/json"
-							},
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							},
-							{
-								"key": "Authorization",
-								"value": "Bearer e582c281c7b7462e01a3a05be8f93aaa4b40dda654ceb0126ba3f538b43da610",
-								"disabled": true
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"name\": {{userName}},\r\n    \"gender\": {{userGender}},\r\n    \"email\": {{userEmail}},\r\n    \"status\": {{userStatus}}\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{url}}/users",
-							"host": [
-								"{{url}}"
-							],
-							"path": [
-								"users"
-							]
-						},
-						"description": "Generated from cURL: curl -i -H \"Accept:application/json\" -H \"Content-Type:application/json\" -H \"Authorization: Bearer e582c281c7b7462e01a3a05be8f93aaa4b40dda654ceb0126ba3f538b43da610\" -XPOST \"https://gorest.co.in/public/v2/users\" -d '{\"name\":\"Tenali Ramakrishna\", \"gender\":\"male\", \"email\":\"tenali.ramakrishna@15ce.com\", \"status\":\"active\"}'"
-					},
-					"response": []
-				},
-				{
-					"name": "GetUserDetail",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"var responseJson = pm.response.json();",
-									"",
-									"pm.test(\"Status code is 200\", function () {",
-									"    pm.response.to.have.status(200);",
-									"});",
-									"",
-									"pm.test(\"Response is an object\", function () {",
-									"    pm.expect(responseJson).to.be.an(\"object\");",
-									"});",
-									"",
-									"pm.test(\"Response has correct structure\", function () {",
-									"    const user = responseJson;",
-									"",
-									"    pm.expect(user).to.have.property(\"id\");",
-									"    pm.expect(user).to.have.property(\"name\");",
-									"    pm.expect(user).to.have.property(\"email\");",
-									"    pm.expect(user).to.have.property(\"gender\");",
-									"    pm.expect(user).to.have.property(\"status\");",
-									"});",
-									"",
-									"pm.test(\"Response data is correct\", function () {",
-									"    pm.expect(responseJson.id).to.eql(pm.environment.get(\"id\"));",
-									"    pm.expect(responseJson.name).to.eql(pm.environment.get(\"name\"));",
-									"    pm.expect(responseJson.email).to.eql(pm.environment.get(\"email\"));",
-									"    pm.expect(responseJson.gender).to.eql(pm.environment.get(\"gender\"));",
-									"    pm.expect(responseJson.status).to.eql(pm.environment.get(\"status\"));",
-									"});",
-									"",
-									"pm.test(\"Content-type header is present\", function () {",
-									"    pm.response.to.have.header(\"Content-type\");",
-									"});",
-									"",
-									"pm.test(\"Content-type header is application/json\", function () {",
-									"    pm.expect(pm.response.headers.get(\"Content-type\")).to.include(\"application/json\");",
-									"});",
-									"",
-									"pm.test(\"Response time is less than 1000ms\", function () {",
-									"    pm.expect(pm.response.responseTime).to.be.below(1000);",
-									"});",
-									""
-								],
-								"type": "text/javascript",
-								"packages": {}
-							}
-						}
-					],
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{url}}/users/{{userId}}",
-							"host": [
-								"{{url}}"
-							],
-							"path": [
-								"users",
-								"{{userId}}"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "UpdateUser",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"pm.test(\"Status code is 200\", function(){\r",
-									"    pm.response.to.have.status(200);\r",
-									"});\r",
-									"\r",
-									"pm.test(\"Response time below 200ms\", function(){\r",
-									"    pm.expect(pm.response.responseTime).to.be.below(200);s\r",
-									"});\r",
-									"\r",
-									"pm.test(\"Response should be JSON\", function () {\r",
-									"    pm.response.to.be.withBody;\r",
-									"    pm.response.to.be.json;\r",
-									"});\r",
-									"\r",
-									"pm.test(\"Verificar que el nombre sea correcto\", function()\r",
-									"{\r",
-									"    var jsonData = pm.response.json();\r",
-									"    pm.expect(jsonData.name).eql({userName});\r",
-									"});\r",
-									"\r",
-									"// postman.setEnvironmentVariable('username', jsonData.name)\r",
-									"\r",
-									""
-								],
-								"type": "text/javascript",
-								"packages": {}
-							}
-						}
-					],
-					"request": {
-						"method": "PATCH",
-						"header": [
-							{
-								"key": "Accept",
-								"value": "application/json"
-							},
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							},
-							{
-								"key": "Authorization",
-								"value": "Bearer e582c281c7b7462e01a3a05be8f93aaa4b40dda654ceb0126ba3f538b43da610"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\"name\":{{userName}}, \"email\":{{userEmail}}, \"status\":{{userStatus}}}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{url}}/users/{{userId}}",
-							"host": [
-								"{{url}}"
-							],
-							"path": [
-								"users",
-								"{{userId}}"
-							]
-						},
-						"description": "Generated from cURL: curl -i -H \"Accept:application/json\" -H \"Content-Type:application/json\" -H \"Authorization: Bearer e582c281c7b7462e01a3a05be8f93aaa4b40dda654ceb0126ba3f538b43da610\" -XPATCH \"https://gorest.co.in/public/v2/users/7440265\" -d '{\"name\":\"Allasani Peddana\", \"email\":\"allasani.peddana@15ce.com\", \"status\":\"active\"}'"
-					},
-					"response": []
-				},
-				{
-					"name": "DeleteUser",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"pm.test(\"Status code is 200\", function(){\r",
-									"    pm.response.to.have.status(204);\r",
-									"});\r",
-									"\r",
-									"pm.test(\"Response time below 200ms\", function(){\r",
-									"    pm.expect(pm.response.responseTime).to.be.below(200);s\r",
-									"});"
-								],
-								"type": "text/javascript",
-								"packages": {}
-							}
-						}
-					],
-					"request": {
-						"method": "DELETE",
-						"header": [
-							{
-								"key": "Accept",
-								"value": "application/json"
-							},
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							},
-							{
-								"key": "Authorization",
-								"value": "Bearer e582c281c7b7462e01a3a05be8f93aaa4b40dda654ceb0126ba3f538b43da610"
-							}
-						],
-						"url": {
-							"raw": "{{url}}/users/{{userId}}",
-							"host": [
-								"{{url}}"
-							],
-							"path": [
-								"users",
-								"{{userId}}"
-							]
-						},
-						"description": "Generated from cURL: curl -i -H \"Accept:application/json\" -H \"Content-Type:application/json\" -H \"Authorization: Bearer e582c281c7b7462e01a3a05be8f93aaa4b40dda654ceb0126ba3f538b43da610\" -XDELETE \"https://gorest.co.in/public/v2/users/7440265\""
-					},
-					"response": []
-				}
-			]
-		},
-		{
-			"name": "Posts",
-			"item": [
-				{
-					"name": "GetPosts",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"var responseJson = pm.response.json();",
-									"",
-									"pm.test(\"Status code is 200\", function () {",
-									"    pm.response.to.have.status(200);",
-									"});",
-									"",
-									"pm.test(\"Response has correct data types\", function () {",
-									"    var posts = responseJson;",
-									"",
-									"    for(const post of posts) {",
-									"        pm.expect(post.id).to.be.a(\"number\");",
-									"        pm.expect(post.user_id).to.be.a(\"number\");",
-									"        pm.expect(post.title).to.be.a(\"string\");",
-									"        pm.expect(post.body).to.be.a(\"string\");",
-									"    }",
-									"});",
-									"",
-									"pm.test(\"Response elements have correct structure\", function () {",
-									"    var posts = responseJson;",
-									"",
-									"    for(const post of posts) {",
-									"        pm.expect(post).to.have.property(\"id\");",
-									"        pm.expect(post).to.have.property(\"user_id\");",
-									"        pm.expect(post).to.have.property(\"title\");",
-									"        pm.expect(post).to.have.property(\"body\");",
-									"    }",
-									"});",
-									""
-								],
-								"type": "text/javascript",
-								"packages": {}
-							}
-						},
-						{
-							"listen": "prerequest",
-							"script": {
-								"exec": [
-									""
-								],
-								"type": "text/javascript",
-								"packages": {}
-							}
-						}
-					],
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{url}}/posts",
-							"host": [
-								"{{url}}"
-							],
-							"path": [
-								"posts"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "CreatePost",
-					"event": [
-						{
-							"listen": "prerequest",
-							"script": {
-								"exec": [
-									"const title = pm.variables.replaceIn(\"{{$randomLoremWords}}\");",
-									"const body = pm.variables.replaceIn(\"{{$randomLoremSentences}}\");",
-									"",
-									"pm.environment.set(\"postTitle\", title);",
-									"pm.environment.set(\"postBody\", body);",
-									""
-								],
-								"type": "text/javascript",
-								"packages": {}
-							}
-						},
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"pm.test(\"Status code is 201\", function () {",
-									"    pm.response.to.have.status(201);",
-									"});",
-									"",
-									"",
-									"pm.test(\"Response is not empty\", function () {",
-									"    var responseJson = pm.response.json();",
-									"    pm.expect(Object.keys(responseJson).length).is.greaterThan(0);",
-									"});",
-									"",
-									"pm.test(\"Post has correct structure\", function () {",
-									"    var responseJson = pm.response.json();",
-									"",
-									"    pm.expect(responseJson).to.have.property(\"id\");",
-									"    pm.expect(responseJson).to.have.property(\"user_id\");",
-									"    pm.expect(responseJson).to.have.property(\"title\");",
-									"    pm.expect(responseJson).to.have.property(\"body\");",
-									"});",
-									"",
-									"pm.environment.set(\"postId\", pm.response.json().id);"
-								],
-								"type": "text/javascript",
-								"packages": {}
-							}
-						}
-					],
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"user\": {\n        \"id\": {{userId}},\n        \"name\": {{userName}},\n        \"email\": {{userEmail}},\n        \"gender\": {{userGender}},\n        \"status\": {{userStatus}}\n    },\n    \"title\": {{postTitle}},\n    \"body\": {{postBody}}\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{url}}/users/{{userId}}/posts",
-							"host": [
-								"{{url}}"
-							],
-							"path": [
-								"users",
-								"{{userId}}",
-								"posts"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Retrievespost",
-					"request": {
-						"method": "GET",
-						"header": [
-							{
-								"key": "accept",
-								"value": "application/json"
-							}
-						],
-						"url": {
-							"raw": "{{url}}/users/{{userId}}/posts",
-							"host": [
-								"{{url}}"
-							],
-							"path": [
-								"users",
-								"{{userId}}",
-								"posts"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "DeletePost",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"pm.test(\"Status code is 204\", function () {",
-									"    pm.response.to.have.status(204);",
-									"});",
-									"",
-									"pm.test(\"Response body is empty\", function () {",
-									"    pm.expect(pm.response.text()).to.be.empty;",
-									"});",
-									"",
-									""
-								],
-								"type": "text/javascript",
-								"packages": {}
-							}
-						}
-					],
-					"request": {
-						"method": "DELETE",
-						"header": [],
-						"url": {
-							"raw": "{{url}}/posts/{{postId}}",
-							"host": [
-								"{{url}}"
-							],
-							"path": [
-								"posts",
-								"{{postId}}"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "UpdatePost",
-					"event": [
-						{
-							"listen": "prerequest",
-							"script": {
-								"exec": [
-									"const title = pm.variables.replaceIn(\"{{$randomLoremWords}}\");",
-									"const body = pm.variables.replaceIn(\"{{$randomLoremSentences}}\");",
-									"",
-									"pm.environment.set(\"postTitle\", title);",
-									"pm.environment.set(\"postBody\", body);",
-									""
-								],
-								"type": "text/javascript",
-								"packages": {}
-							}
-						},
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"pm.test(\"Status code is 200\", function () {",
-									"    pm.response.to.have.status(200);",
-									"});",
-									"",
-									"pm.test(\"Post information is correct\", function () {",
-									"    var responseJson = pm.response.json();",
-									"",
-									"    pm.expect(responseJson.user_id).to.eql(pm.environment.get(\"id\"));",
-									"    pm.expect(responseJson.title).to.eql(pm.environment.get(\"postTitle\"));",
-									"    pm.expect(responseJson.body).to.eql(pm.environment.get(\"postBody\"));",
-									"});",
-									"",
-									"",
-									"pm.test(\"Post has correct structure\", function () {",
-									"    var responseJson = pm.response.json();",
-									"",
-									"    pm.expect(responseJson).to.have.property(\"id\");",
-									"    pm.expect(responseJson).to.have.property(\"user_id\");",
-									"    pm.expect(responseJson).to.have.property(\"title\");",
-									"    pm.expect(responseJson).to.have.property(\"body\");",
-									"});",
-									""
-								],
-								"type": "text/javascript",
-								"packages": {}
-							}
-						}
-					],
-					"request": {
-						"method": "PATCH",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"title\": \"{{postTitle}}\",\n    \"body\": \"{{postBody}}\"\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{url}}/posts/{{postId}}",
-							"host": [
-								"{{url}}"
-							],
-							"path": [
-								"posts",
-								"{{postId}}"
-							]
-						}
-					},
-					"response": []
-				}
-			]
-		},
-		{
-			"name": "Comments",
-			"item": [
-				{
-					"name": "CreateComment",
-					"event": [
-						{
-							"listen": "prerequest",
-							"script": {
-								"exec": [
-									"const commentBody = pm.variables.replaceIn(\"{{$randomLoremSentences}}\");",
-									"",
-									"pm.environment.set(\"commentBody\", commentBody);",
-									"",
-									""
-								],
-								"type": "text/javascript",
-								"packages": {}
-							}
-						},
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"pm.test(\"Status code is 201\", function () {",
-									"    pm.response.to.have.status(201);",
-									"});",
-									"",
-									"pm.test(\"Comment has correct structure\", function () {",
-									"    var responseJson = pm.response.json();",
-									"",
-									"    pm.expect(responseJson).to.have.property(\"id\");",
-									"    pm.expect(responseJson).to.have.property(\"post_id\");",
-									"    pm.expect(responseJson).to.have.property(\"name\");",
-									"    pm.expect(responseJson).to.have.property(\"email\");",
-									"    pm.expect(responseJson).to.have.property(\"body\");",
-									"});",
-									"",
-									"pm.test(\"Comment has correct data types\", function () {",
-									"    var responseJson = pm.response.json();",
-									"",
-									"    pm.expect(responseJson.id).to.be.a(\"number\");",
-									"    pm.expect(responseJson.post_id).to.be.a(\"number\");",
-									"    pm.expect(responseJson.name).to.be.a(\"string\");",
-									"    pm.expect(responseJson.email).to.be.a(\"string\");",
-									"    pm.expect(responseJson.body).to.be.a(\"string\");",
-									"})",
-									"",
-									"pm.environment.set(\"commentId\", pm.response.json().id);"
-								],
-								"type": "text/javascript",
-								"packages": {}
-							}
-						}
-					],
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"name\": \"{{userName}}\",\n    \"email\": \"{{userEmail}}\",\n    \"body\": \"{{comment}}\"\n}\n\n",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{url}}/posts/{{postId}}/comments",
-							"host": [
-								"{{url}}"
-							],
-							"path": [
-								"posts",
-								"{{postId}}",
-								"comments"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "GetComments",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"pm.test(\"Status code is 200\", function () {",
-									"    pm.response.to.have.status(200);",
-									"});",
-									"",
-									"pm.test(\"Items have the correct data types\", function () {",
-									"    const comments = pm.response.json();",
-									"",
-									"    for(const comment of comments) {",
-									"        pm.expect(comment.id).to.be.a(\"number\");",
-									"        pm.expect(comment.post_id).to.be.a(\"number\");",
-									"        pm.expect(comment.name).to.be.a(\"string\");",
-									"        pm.expect(comment.email).to.be.a(\"string\");",
-									"        pm.expect(comment.body).to.be.a(\"string\");",
-									"    }",
-									"});",
-									""
-								],
-								"type": "text/javascript",
-								"packages": {}
-							}
-						}
-					],
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{url}}/comments",
-							"host": [
-								"{{url}}"
-							],
-							"path": [
-								"comments"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "UpdateComment",
-					"event": [
-						{
-							"listen": "prerequest",
-							"script": {
-								"exec": [
-									"const body = pm.variables.replaceIn(\"{{$randomLoremSentences}}\");",
-									"",
-									"pm.environment.set(\"commentBody\", body);"
-								],
-								"type": "text/javascript",
-								"packages": {}
-							}
-						},
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"pm.test(\"Status code is 200\", function () {",
-									"    pm.response.to.have.status(200);",
-									"});",
-									"",
-									"pm.test(\"Comment body is correctly patched\", function () {",
-									"   pm.expect(pm.response.json().body).to.eql(pm.environment.get(\"commentBody\")); ",
-									"});",
-									"",
-									"pm.test(\"Comment body is a string\", function () {",
-									"    pm.expect(pm.response.json().body).to.be.a(\"string\");",
-									"})",
-									""
-								],
-								"type": "text/javascript",
-								"packages": {}
-							}
-						}
-					],
-					"request": {
-						"method": "PATCH",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"body\": \"{{comment}}\"\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{url}}/comments/{{commentId}}",
-							"host": [
-								"{{url}}"
-							],
-							"path": [
-								"comments",
-								"{{commentId}}"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "DeleteComment",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"pm.test(\"Status code is 204\", function () {",
-									"    pm.response.to.have.status(204);",
-									"});",
-									"",
-									"pm.test(\"Response body is empty\", function () {",
-									"    pm.expect(pm.response.text()).to.be.empty;",
-									"});",
-									""
-								],
-								"type": "text/javascript",
-								"packages": {}
-							}
-						}
-					],
-					"request": {
-						"method": "DELETE",
-						"header": [],
-						"url": {
-							"raw": "{{url}}/comments/{{commentId}}",
-							"host": [
-								"{{url}}"
-							],
-							"path": [
-								"comments",
-								"{{commentId}}"
-							]
-						}
-					},
-					"response": []
-				}
-			]
-		},
-		{
-			"name": "ToDo",
-			"item": [
-				{
-					"name": "CreateTodo",
-					"event": [
-						{
-							"listen": "prerequest",
-							"script": {
-								"exec": [
-									"const title = pm.variables.replaceIn(\"{{$randomLoremWords}}\");",
-									"const statusList = [\"pending\", \"completed\"];",
-									"const date = pm.variables.replaceIn(\"{{$randomDateFuture}}\")",
-									"",
-									"const indexStatusList = Math.floor(Math.random() * statusList.length);",
-									"",
-									"pm.environment.set(\"todoTitle\", title);",
-									"pm.environment.set(\"todoStatus\", statusList[indexStatusList]);",
-									"pm.environment.set(\"todoDueOn\", date);"
-								],
-								"type": "text/javascript",
-								"packages": {}
-							}
-						},
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"pm.test(\"Successful POST request\", function () {",
-									"    pm.expect(pm.response.code).to.be.oneOf([201, 202]);",
-									"});",
-									"",
-									"pm.test(\"Response body has correct data types\", function () {",
-									"   const responseJson = pm.response.json();",
-									"",
-									"   pm.expect(responseJson.user_id).to.be.a(\"number\"); ",
-									"   pm.expect(responseJson.title).to.be.a(\"string\"); ",
-									"   pm.expect(responseJson.due_on).to.be.a(\"string\"); ",
-									"   pm.expect(responseJson.status).to.be.a(\"string\"); ",
-									"});",
-									"",
-									"pm.test(\"Response body contains correct keys\", function () {",
-									"    const responseJson = pm.response.json();",
-									"",
-									"    pm.expect(responseJson).to.have.property(\"id\");",
-									"    pm.expect(responseJson).to.have.property(\"user_id\");",
-									"    pm.expect(responseJson).to.have.property(\"title\");",
-									"    pm.expect(responseJson).to.have.property(\"due_on\");",
-									"    pm.expect(responseJson).to.have.property(\"status\");",
-									"});",
-									"",
-									"",
-									"pm.environment.set(\"todoId\", pm.response.json().id);",
-									" "
-								],
-								"type": "text/javascript",
-								"packages": {}
-							}
-						}
-					],
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{ \n    \"title\": \"{{todoTitle}}\",\n    \"status\": \"{{todoStatus}}\",\n    \"due_on\": \"{{todoDueOn}}\"\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{url}}/users/{{userId}}/todos",
-							"host": [
-								"{{url}}"
-							],
-							"path": [
-								"users",
-								"{{userId}}",
-								"todos"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "GetTodos",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"pm.test(\"Status code is 200\", function () {",
-									"    pm.response.to.have.status(200);",
-									"});",
-									"",
-									"pm.test(\"Response has correct data types\", function () {",
-									"    var todos = pm.response.json();",
-									"",
-									"    for(const todo of todos) {",
-									"        pm.expect(todo.id).to.be.a(\"number\");",
-									"        pm.expect(todo.user_id).to.be.a(\"number\");",
-									"        pm.expect(todo.title).to.be.a(\"string\");",
-									"        pm.expect(todo.status).to.be.a(\"string\");",
-									"    }",
-									"});",
-									"",
-									"",
-									"pm.test(\"Response elements have correct structure\", function () {",
-									"    var todos = pm.response.json();",
-									"",
-									"    for(const todo of todos) {",
-									"        pm.expect(todo).to.have.property(\"id\");",
-									"        pm.expect(todo).to.have.property(\"user_id\");",
-									"        pm.expect(todo).to.have.property(\"title\");",
-									"        pm.expect(todo).to.have.property(\"due_on\");",
-									"        pm.expect(todo).to.have.property(\"status\");",
-									"    }",
-									"});",
-									""
-								],
-								"type": "text/javascript",
-								"packages": {}
-							}
-						}
-					],
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{url}}/todos",
-							"host": [
-								"{{url}}"
-							],
-							"path": [
-								"todos"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "UpdateTodo",
-					"event": [
-						{
-							"listen": "prerequest",
-							"script": {
-								"exec": [
-									"const title = pm.variables.replaceIn(\"{{$randomLoremWords}}\");",
-									"const statusList = [\"completed\", \"pending\"];",
-									"",
-									"const indexStatusList = Math.floor(Math.random() * statusList.length);",
-									"",
-									"pm.environment.set(\"todoTitle\", title);",
-									"pm.environment.set(\"todoStatus\", statusList[indexStatusList]);",
-									""
-								],
-								"type": "text/javascript",
-								"packages": {}
-							}
-						},
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"",
-									"pm.test(\"Status code is 200\", function () {",
-									"    pm.response.to.have.status(200);",
-									"});",
-									"",
-									"pm.test(\"Response time is less than 2000ms\", function () {",
-									"    pm.expect(pm.response.responseTime).to.be.below(2000);",
-									"});"
-								],
-								"type": "text/javascript",
-								"packages": {}
-							}
-						}
-					],
-					"request": {
-						"method": "PATCH",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"title\": \"{{todoTitle}}\",\n    \"status\": \"{{todoStatus}}\"\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{url}}/todos/{{todoId}}",
-							"host": [
-								"{{url}}"
-							],
-							"path": [
-								"todos",
-								"{{todoId}}"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "DeleteTodo",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"pm.test(\"Status code is 204\", function () {",
-									"    pm.response.to.have.status(204);",
-									"});",
-									"",
-									"pm.test(\"Response body is empty\", function () {",
-									"    pm.expect(pm.response.text()).to.be.empty;",
-									"});",
-									""
-								],
-								"type": "text/javascript",
-								"packages": {}
-							}
-						}
-					],
-					"request": {
-						"method": "DELETE",
-						"header": [],
-						"url": {
-							"raw": "{{url}}/todos/{{todoId}}",
-							"host": [
-								"{{url}}"
-							],
-							"path": [
-								"todos",
-								"{{todoId}}"
-							]
-						}
-					},
-					"response": []
-				}
-			]
-		}
-	]
+  "info": {
+    "_postman_id": "4d21c053-b743-451e-a652-f3cb989f5948",
+    "name": "GoRest",
+    "description": "Colección CRUD de GoRest para Postman, Newman y Jenkins. Configure BearerToken fuera del archivo: --env-var \"BearerToken=$GOREST_TOKEN\".",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{BearerToken}}",
+        "type": "string"
+      }
+    ]
+  },
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "exec": [
+          "const nextRequestByName = { GetUsers: 'CreateUser', CreateUser: 'GetUserDetail', GetUserDetail: 'UpdateUser', UpdateUser: 'GetPosts', GetPosts: 'CreatePost', CreatePost: 'Retrievespost', Retrievespost: 'UpdatePost', UpdatePost: 'CreateComment', CreateComment: 'GetComments', GetComments: 'UpdateComment', UpdateComment: 'DeleteComment', DeleteComment: 'CreateTodo', CreateTodo: 'GetTodos', GetTodos: 'UpdateTodo', UpdateTodo: 'DeleteTodo', DeleteTodo: 'DeletePost', DeletePost: 'DeleteUser', DeleteUser: null };",
+          "pm.execution.setNextRequest(nextRequestByName[pm.info.requestName] || null);",
+          "if (pm.info.requestName === 'GetUsers') { ['userId', 'postId', 'commentId', 'todoId'].forEach((key) => pm.environment.unset(key)); pm.environment.set('runSuffix', Date.now().toString() + '-' + pm.variables.replaceIn('{{$randomInt}}')); }",
+          "const token = pm.environment.get('BearerToken'); if (!token || token === 'YOUR_GOREST_TOKEN') { pm.test('BearerToken is configured', () => pm.expect(token, 'Configure BearerToken through Postman or Jenkins credentials').to.be.a('string').and.not.empty); console.error('BearerToken is not configured. The run stops before sending requests.'); pm.execution.setNextRequest(null); pm.execution.skipRequest(); }"
+        ]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "exec": [
+          "const responseContentType = pm.response.headers.get('Content-Type') || ''; pm.test('Response is not HTML', () => pm.expect(responseContentType.toLowerCase()).to.not.include('text/html'));",
+          "if (pm.response.code >= 400) { console.error('HTTP ' + pm.response.code + ' for ' + pm.info.requestName + ': ' + pm.response.text().slice(0, 400)); }"
+        ]
+      }
+    }
+  ],
+  "item": [
+    {
+      "name": "Users",
+      "item": [
+        {
+          "name": "GetUsers",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{url}}/users"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const contentType = pm.response.headers.get('Content-Type') || ''; const isJson = contentType.toLowerCase().includes('application/json'); let body = null; try { body = isJson ? pm.response.json() : null; } catch (error) { console.error('Invalid JSON response:', error.message); }",
+                  "if (typeof pm.response.code === 'number') { pm.test('Status code is 200', () => pm.response.to.have.status(200)); }",
+                  "if (typeof pm.response.responseTime === 'number') { pm.test('Response time is within configured limit', () => pm.expect(pm.response.responseTime).to.be.below(Number(pm.environment.get('maxResponseTimeMs') || 2000))); }",
+                  "if (pm.response.code === 200) { pm.test('Response is a JSON array', () => pm.expect(Array.isArray(body), 'Expected a JSON array').to.eql(true)); }",
+                  "if (pm.response.code === 200 && Array.isArray(body)) { pm.test('Users have required fields and types', () => body.forEach((item) => { pm.expect(item.id).to.be.a('number'); pm.expect(item.name).to.be.a('string'); pm.expect(item.email).to.be.a('string'); pm.expect(item.gender).to.be.a('string'); pm.expect(item.status).to.be.a('string'); })); }"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "CreateUser",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{url}}/users"
+          },
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const suffix = pm.environment.get('runSuffix') || Date.now().toString(); pm.environment.set('userName', 'QA Newman ' + suffix); pm.environment.set('userEmail', 'qa.newman.' + suffix + '@example.com'); pm.environment.set('userGender', 'male'); pm.environment.set('userStatus', 'active'); pm.request.body.update(JSON.stringify({ name: pm.environment.get('userName'), email: pm.environment.get('userEmail'), gender: pm.environment.get('userGender'), status: pm.environment.get('userStatus') }));"
+                ]
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const contentType = pm.response.headers.get('Content-Type') || ''; const isJson = contentType.toLowerCase().includes('application/json'); let body = null; try { body = isJson ? pm.response.json() : null; } catch (error) { console.error('Invalid JSON response:', error.message); }",
+                  "if (typeof pm.response.code === 'number') { pm.test('Status code is 201', () => pm.response.to.have.status(201)); }",
+                  "if (typeof pm.response.responseTime === 'number') { pm.test('Response time is within configured limit', () => pm.expect(pm.response.responseTime).to.be.below(Number(pm.environment.get('maxResponseTimeMs') || 2000))); }",
+                  "if (pm.response.code === 201) { pm.test('Created user response is JSON', () => pm.expect(body, 'Expected JSON before validating the created user').to.be.an('object')); }",
+                  "if (pm.response.code === 201 && body) { pm.test('Created user has the required fields', () => ['id', 'name', 'email', 'gender', 'status'].forEach((key) => pm.expect(body).to.have.property(key))); pm.test('Created user contains the submitted values', () => { pm.expect(body.name).to.eql(pm.environment.get('userName')); pm.expect(body.email).to.eql(pm.environment.get('userEmail')); pm.expect(body.gender).to.eql(pm.environment.get('userGender')); pm.expect(body.status).to.eql(pm.environment.get('userStatus')); }); pm.environment.set('userId', String(body.id)); }"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "GetUserDetail",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{url}}/users/{{userId}}"
+          },
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const id = pm.environment.get('userId'); if (!id) { console.warn('Skipping ' + pm.info.requestName + ' because its required ID was not created.'); pm.execution.skipRequest(); }"
+                ]
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const contentType = pm.response.headers.get('Content-Type') || ''; const isJson = contentType.toLowerCase().includes('application/json'); let body = null; try { body = isJson ? pm.response.json() : null; } catch (error) { console.error('Invalid JSON response:', error.message); }",
+                  "if (typeof pm.response.code === 'number') { pm.test('Status code is 200', () => pm.response.to.have.status(200)); }",
+                  "if (typeof pm.response.responseTime === 'number') { pm.test('Response time is within configured limit', () => pm.expect(pm.response.responseTime).to.be.below(Number(pm.environment.get('maxResponseTimeMs') || 2000))); }",
+                  "if (pm.response.code === 200) { pm.test('User detail is JSON', () => pm.expect(body, 'Expected JSON user detail').to.be.an('object')); }",
+                  "if (pm.response.code === 200 && body) { pm.test('Retrieved user matches the created user', () => { pm.expect(String(body.id)).to.eql(pm.environment.get('userId')); pm.expect(body.name).to.eql(pm.environment.get('userName')); pm.expect(body.email).to.eql(pm.environment.get('userEmail')); }); }"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "UpdateUser",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{url}}/users/{{userId}}"
+          },
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const id = pm.environment.get('userId'); if (!id) { console.warn('Skipping ' + pm.info.requestName + ' because its required ID was not created.'); pm.execution.skipRequest(); }",
+                  "const updatedName = pm.environment.get('userName') + ' Updated'; pm.environment.set('userName', updatedName); pm.request.body.update(JSON.stringify({ name: updatedName, status: pm.environment.get('userStatus') }));"
+                ]
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const contentType = pm.response.headers.get('Content-Type') || ''; const isJson = contentType.toLowerCase().includes('application/json'); let body = null; try { body = isJson ? pm.response.json() : null; } catch (error) { console.error('Invalid JSON response:', error.message); }",
+                  "if (typeof pm.response.code === 'number') { pm.test('Status code is 200', () => pm.response.to.have.status(200)); }",
+                  "if (typeof pm.response.responseTime === 'number') { pm.test('Response time is within configured limit', () => pm.expect(pm.response.responseTime).to.be.below(Number(pm.environment.get('maxResponseTimeMs') || 2000))); }",
+                  "if (pm.response.code === 200 && body) { pm.test('Updated user contains the submitted values', () => { pm.expect(String(body.id)).to.eql(pm.environment.get('userId')); pm.expect(body.name).to.eql(pm.environment.get('userName')); pm.expect(body.status).to.eql(pm.environment.get('userStatus')); }); }"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "DeleteUser",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{url}}/users/{{userId}}"
+          },
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const id = pm.environment.get('userId'); if (!id) { console.warn('Skipping ' + pm.info.requestName + ' because its required ID was not created.'); pm.execution.skipRequest(); }"
+                ]
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "if (typeof pm.response.code === 'number') { pm.test('Status code is 204', () => pm.response.to.have.status(204)); }",
+                  "if (pm.response.code === 204) { pm.test('Delete user response body is empty', () => pm.expect(pm.response.text()).to.be.empty); }",
+                  "if (pm.response.code === 204) { pm.environment.unset('userId'); }"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Posts",
+      "item": [
+        {
+          "name": "GetPosts",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{url}}/posts"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const contentType = pm.response.headers.get('Content-Type') || ''; const isJson = contentType.toLowerCase().includes('application/json'); let body = null; try { body = isJson ? pm.response.json() : null; } catch (error) { console.error('Invalid JSON response:', error.message); }",
+                  "if (typeof pm.response.code === 'number') { pm.test('Status code is 200', () => pm.response.to.have.status(200)); }",
+                  "if (typeof pm.response.responseTime === 'number') { pm.test('Response time is within configured limit', () => pm.expect(pm.response.responseTime).to.be.below(Number(pm.environment.get('maxResponseTimeMs') || 2000))); }",
+                  "if (pm.response.code === 200) { pm.test('Response is a JSON array', () => pm.expect(Array.isArray(body), 'Expected a JSON array').to.eql(true)); }",
+                  "if (pm.response.code === 200 && Array.isArray(body)) { pm.test('Posts have required fields and types', () => body.forEach((item) => { pm.expect(item.id).to.be.a('number'); pm.expect(item.user_id).to.be.a('number'); pm.expect(item.title).to.be.a('string'); pm.expect(item.body).to.be.a('string'); })); }"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "CreatePost",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{url}}/users/{{userId}}/posts"
+          },
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const id = pm.environment.get('userId'); if (!id) { console.warn('Skipping ' + pm.info.requestName + ' because its required ID was not created.'); pm.execution.skipRequest(); }",
+                  "pm.environment.set('postTitle', pm.variables.replaceIn('{{$randomLoremWords}}')); pm.environment.set('postBody', pm.variables.replaceIn('{{$randomLoremSentences}}')); pm.request.body.update(JSON.stringify({ title: pm.environment.get('postTitle'), body: pm.environment.get('postBody') }));"
+                ]
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const contentType = pm.response.headers.get('Content-Type') || ''; const isJson = contentType.toLowerCase().includes('application/json'); let body = null; try { body = isJson ? pm.response.json() : null; } catch (error) { console.error('Invalid JSON response:', error.message); }",
+                  "if (typeof pm.response.code === 'number') { pm.test('Status code is 201', () => pm.response.to.have.status(201)); }",
+                  "if (typeof pm.response.responseTime === 'number') { pm.test('Response time is within configured limit', () => pm.expect(pm.response.responseTime).to.be.below(Number(pm.environment.get('maxResponseTimeMs') || 2000))); }",
+                  "if (pm.response.code === 201 && body) { pm.test('Created post contains the submitted values', () => { pm.expect(String(body.user_id)).to.eql(pm.environment.get('userId')); pm.expect(body.title).to.eql(pm.environment.get('postTitle')); pm.expect(body.body).to.eql(pm.environment.get('postBody')); }); pm.environment.set('postId', String(body.id)); }"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Retrievespost",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{url}}/users/{{userId}}/posts"
+          },
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const id = pm.environment.get('userId'); if (!id) { console.warn('Skipping ' + pm.info.requestName + ' because its required ID was not created.'); pm.execution.skipRequest(); }"
+                ]
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const contentType = pm.response.headers.get('Content-Type') || ''; const isJson = contentType.toLowerCase().includes('application/json'); let body = null; try { body = isJson ? pm.response.json() : null; } catch (error) { console.error('Invalid JSON response:', error.message); }",
+                  "if (typeof pm.response.code === 'number') { pm.test('Status code is 200', () => pm.response.to.have.status(200)); }",
+                  "if (pm.response.code === 200) { pm.test('Response is a JSON array', () => pm.expect(Array.isArray(body), 'Expected a JSON array').to.eql(true)); }",
+                  "if (pm.response.code === 200 && Array.isArray(body)) { pm.test('Created post is returned for its user', () => pm.expect(body.some((post) => String(post.id) === pm.environment.get('postId'))).to.eql(true)); }"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "DeletePost",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{url}}/posts/{{postId}}"
+          },
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const id = pm.environment.get('postId'); if (!id) { console.warn('Skipping ' + pm.info.requestName + ' because its required ID was not created.'); pm.execution.skipRequest(); }"
+                ]
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "if (typeof pm.response.code === 'number') { pm.test('Status code is 204', () => pm.response.to.have.status(204)); }",
+                  "if (pm.response.code === 204) { pm.test('Delete post response body is empty', () => pm.expect(pm.response.text()).to.be.empty); }",
+                  "if (pm.response.code === 204) { pm.environment.unset('postId'); }"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "UpdatePost",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{url}}/posts/{{postId}}"
+          },
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const id = pm.environment.get('postId'); if (!id) { console.warn('Skipping ' + pm.info.requestName + ' because its required ID was not created.'); pm.execution.skipRequest(); }",
+                  "pm.environment.set('postTitle', pm.variables.replaceIn('{{$randomLoremWords}}')); pm.environment.set('postBody', pm.variables.replaceIn('{{$randomLoremSentences}}')); pm.request.body.update(JSON.stringify({ title: pm.environment.get('postTitle'), body: pm.environment.get('postBody') }));"
+                ]
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const contentType = pm.response.headers.get('Content-Type') || ''; const isJson = contentType.toLowerCase().includes('application/json'); let body = null; try { body = isJson ? pm.response.json() : null; } catch (error) { console.error('Invalid JSON response:', error.message); }",
+                  "if (typeof pm.response.code === 'number') { pm.test('Status code is 200', () => pm.response.to.have.status(200)); }",
+                  "if (typeof pm.response.responseTime === 'number') { pm.test('Response time is within configured limit', () => pm.expect(pm.response.responseTime).to.be.below(Number(pm.environment.get('maxResponseTimeMs') || 2000))); }",
+                  "if (pm.response.code === 200 && body) { pm.test('Updated post contains the submitted values', () => { pm.expect(String(body.id)).to.eql(pm.environment.get('postId')); pm.expect(String(body.user_id)).to.eql(pm.environment.get('userId')); pm.expect(body.title).to.eql(pm.environment.get('postTitle')); pm.expect(body.body).to.eql(pm.environment.get('postBody')); }); }"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Comments",
+      "item": [
+        {
+          "name": "CreateComment",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{url}}/posts/{{postId}}/comments"
+          },
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const id = pm.environment.get('postId'); if (!id) { console.warn('Skipping ' + pm.info.requestName + ' because its required ID was not created.'); pm.execution.skipRequest(); }",
+                  "pm.environment.set('commentBody', pm.variables.replaceIn('{{$randomLoremSentences}}')); pm.request.body.update(JSON.stringify({ name: pm.environment.get('userName'), email: pm.environment.get('userEmail'), body: pm.environment.get('commentBody') }));"
+                ]
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const contentType = pm.response.headers.get('Content-Type') || ''; const isJson = contentType.toLowerCase().includes('application/json'); let body = null; try { body = isJson ? pm.response.json() : null; } catch (error) { console.error('Invalid JSON response:', error.message); }",
+                  "if (typeof pm.response.code === 'number') { pm.test('Status code is 201', () => pm.response.to.have.status(201)); }",
+                  "if (typeof pm.response.responseTime === 'number') { pm.test('Response time is within configured limit', () => pm.expect(pm.response.responseTime).to.be.below(Number(pm.environment.get('maxResponseTimeMs') || 2000))); }",
+                  "if (pm.response.code === 201 && body) { pm.test('Created comment contains the submitted values', () => { pm.expect(String(body.post_id)).to.eql(pm.environment.get('postId')); pm.expect(body.name).to.eql(pm.environment.get('userName')); pm.expect(body.email).to.eql(pm.environment.get('userEmail')); pm.expect(body.body).to.eql(pm.environment.get('commentBody')); }); pm.environment.set('commentId', String(body.id)); }"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "GetComments",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{url}}/posts/{{postId}}/comments"
+          },
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const id = pm.environment.get('postId'); if (!id) { console.warn('Skipping ' + pm.info.requestName + ' because its required ID was not created.'); pm.execution.skipRequest(); }"
+                ]
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const contentType = pm.response.headers.get('Content-Type') || ''; const isJson = contentType.toLowerCase().includes('application/json'); let body = null; try { body = isJson ? pm.response.json() : null; } catch (error) { console.error('Invalid JSON response:', error.message); }",
+                  "if (typeof pm.response.code === 'number') { pm.test('Status code is 200', () => pm.response.to.have.status(200)); }",
+                  "if (pm.response.code === 200) { pm.test('Response is a JSON array', () => pm.expect(Array.isArray(body), 'Expected a JSON array').to.eql(true)); }",
+                  "if (pm.response.code === 200 && Array.isArray(body)) { pm.test('Created comment is returned for its post', () => pm.expect(body.some((comment) => String(comment.id) === pm.environment.get('commentId'))).to.eql(true)); }"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "UpdateComment",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{url}}/comments/{{commentId}}"
+          },
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const id = pm.environment.get('commentId'); if (!id) { console.warn('Skipping ' + pm.info.requestName + ' because its required ID was not created.'); pm.execution.skipRequest(); }",
+                  "pm.environment.set('commentBody', pm.variables.replaceIn('{{$randomLoremSentences}}')); pm.request.body.update(JSON.stringify({ body: pm.environment.get('commentBody') }));"
+                ]
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const contentType = pm.response.headers.get('Content-Type') || ''; const isJson = contentType.toLowerCase().includes('application/json'); let body = null; try { body = isJson ? pm.response.json() : null; } catch (error) { console.error('Invalid JSON response:', error.message); }",
+                  "if (typeof pm.response.code === 'number') { pm.test('Status code is 200', () => pm.response.to.have.status(200)); }",
+                  "if (typeof pm.response.responseTime === 'number') { pm.test('Response time is within configured limit', () => pm.expect(pm.response.responseTime).to.be.below(Number(pm.environment.get('maxResponseTimeMs') || 2000))); }",
+                  "if (pm.response.code === 200 && body) { pm.test('Comment body is correctly patched', () => pm.expect(body.body).to.eql(pm.environment.get('commentBody'))); }"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "DeleteComment",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{url}}/comments/{{commentId}}"
+          },
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const id = pm.environment.get('commentId'); if (!id) { console.warn('Skipping ' + pm.info.requestName + ' because its required ID was not created.'); pm.execution.skipRequest(); }"
+                ]
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "if (typeof pm.response.code === 'number') { pm.test('Status code is 204', () => pm.response.to.have.status(204)); }",
+                  "if (pm.response.code === 204) { pm.test('Delete comment response body is empty', () => pm.expect(pm.response.text()).to.be.empty); }",
+                  "if (pm.response.code === 204) { pm.environment.unset('commentId'); }"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "ToDo",
+      "item": [
+        {
+          "name": "CreateTodo",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{url}}/users/{{userId}}/todos"
+          },
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const id = pm.environment.get('userId'); if (!id) { console.warn('Skipping ' + pm.info.requestName + ' because its required ID was not created.'); pm.execution.skipRequest(); }",
+                  "pm.environment.set('todoTitle', pm.variables.replaceIn('{{$randomLoremWords}}')); pm.environment.set('todoStatus', 'pending'); pm.environment.set('todoDueOn', new Date(Date.now() + 86400000).toISOString()); pm.request.body.update(JSON.stringify({ title: pm.environment.get('todoTitle'), status: pm.environment.get('todoStatus'), due_on: pm.environment.get('todoDueOn') }));"
+                ]
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const contentType = pm.response.headers.get('Content-Type') || ''; const isJson = contentType.toLowerCase().includes('application/json'); let body = null; try { body = isJson ? pm.response.json() : null; } catch (error) { console.error('Invalid JSON response:', error.message); }",
+                  "if (typeof pm.response.code === 'number') { pm.test('Status code is 201', () => pm.response.to.have.status(201)); }",
+                  "if (typeof pm.response.responseTime === 'number') { pm.test('Response time is within configured limit', () => pm.expect(pm.response.responseTime).to.be.below(Number(pm.environment.get('maxResponseTimeMs') || 2000))); }",
+                  "if (pm.response.code === 201 && body) { pm.test('Created todo contains the submitted values', () => { pm.expect(String(body.user_id)).to.eql(pm.environment.get('userId')); pm.expect(body.title).to.eql(pm.environment.get('todoTitle')); pm.expect(body.status).to.eql(pm.environment.get('todoStatus')); pm.expect(body.due_on).to.be.a('string'); }); pm.environment.set('todoId', String(body.id)); }"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "GetTodos",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{url}}/users/{{userId}}/todos"
+          },
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const id = pm.environment.get('userId'); if (!id) { console.warn('Skipping ' + pm.info.requestName + ' because its required ID was not created.'); pm.execution.skipRequest(); }"
+                ]
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const contentType = pm.response.headers.get('Content-Type') || ''; const isJson = contentType.toLowerCase().includes('application/json'); let body = null; try { body = isJson ? pm.response.json() : null; } catch (error) { console.error('Invalid JSON response:', error.message); }",
+                  "if (typeof pm.response.code === 'number') { pm.test('Status code is 200', () => pm.response.to.have.status(200)); }",
+                  "if (pm.response.code === 200) { pm.test('Response is a JSON array', () => pm.expect(Array.isArray(body), 'Expected a JSON array').to.eql(true)); }",
+                  "if (pm.response.code === 200 && Array.isArray(body)) { pm.test('Created todo is returned for its user', () => pm.expect(body.some((todo) => String(todo.id) === pm.environment.get('todoId'))).to.eql(true)); }"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "UpdateTodo",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{url}}/todos/{{todoId}}"
+          },
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const id = pm.environment.get('todoId'); if (!id) { console.warn('Skipping ' + pm.info.requestName + ' because its required ID was not created.'); pm.execution.skipRequest(); }",
+                  "pm.environment.set('todoTitle', pm.variables.replaceIn('{{$randomLoremWords}}')); pm.environment.set('todoStatus', 'completed'); pm.request.body.update(JSON.stringify({ title: pm.environment.get('todoTitle'), status: pm.environment.get('todoStatus') }));"
+                ]
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const contentType = pm.response.headers.get('Content-Type') || ''; const isJson = contentType.toLowerCase().includes('application/json'); let body = null; try { body = isJson ? pm.response.json() : null; } catch (error) { console.error('Invalid JSON response:', error.message); }",
+                  "if (typeof pm.response.code === 'number') { pm.test('Status code is 200', () => pm.response.to.have.status(200)); }",
+                  "if (typeof pm.response.responseTime === 'number') { pm.test('Response time is within configured limit', () => pm.expect(pm.response.responseTime).to.be.below(Number(pm.environment.get('maxResponseTimeMs') || 2000))); }",
+                  "if (pm.response.code === 200 && body) { pm.test('Updated todo contains the submitted values', () => { pm.expect(String(body.id)).to.eql(pm.environment.get('todoId')); pm.expect(String(body.user_id)).to.eql(pm.environment.get('userId')); pm.expect(body.title).to.eql(pm.environment.get('todoTitle')); pm.expect(body.status).to.eql(pm.environment.get('todoStatus')); }); }"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "DeleteTodo",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{url}}/todos/{{todoId}}"
+          },
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const id = pm.environment.get('todoId'); if (!id) { console.warn('Skipping ' + pm.info.requestName + ' because its required ID was not created.'); pm.execution.skipRequest(); }"
+                ]
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "if (typeof pm.response.code === 'number') { pm.test('Status code is 204', () => pm.response.to.have.status(204)); }",
+                  "if (pm.response.code === 204) { pm.test('Delete todo response body is empty', () => pm.expect(pm.response.text()).to.be.empty); }",
+                  "if (pm.response.code === 204) { pm.environment.unset('todoId'); }"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
 }
